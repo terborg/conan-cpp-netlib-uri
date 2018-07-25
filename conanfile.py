@@ -26,6 +26,12 @@ conan_basic_setup()''')
 
     def build(self):
         cmake = CMake(self)
+        
+        # disable building of the tests
+        if tools.cross_building( self.settings ):
+            cmake.definitions[ "Uri_BUILD_TESTS" ] = False
+            cmake.definitions[ "Uri_BUILD_DOCS" ] = False
+        
         cmake.configure(source_folder="uri")
         cmake.build()
 
